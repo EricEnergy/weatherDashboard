@@ -1,29 +1,28 @@
 body {
-    background-image: url("tall.jpg");
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-  }
-
-  #today {
-    
-    margin-right: 20px;
-  }
-
-  h4 {
-    background-color: rgb(241, 241, 241);
-    margin-right: 20px;
-    text-align: center;
-    margin-top: 0px;
-  }
-
-#headerTop {
-  margin-right: 20px;
+  background-image: url("tall.jpg");
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
 }
 
-#forecast {
-  
+#today {
+  margin-right: 20px;
+  }
+
+h4 {
+  background-color: rgb(241, 241, 241);
+  margin-right: 20px;
+  text-align: center;
+  vertical-align: text-top;
+
+  }
+
+
+#boxesLined {
+  justify-content: space-between;
+  margin-left: 3px;
+  margin-right: 18px;
 }
 
 #location {
@@ -31,4 +30,14 @@ body {
   margin-right: 20px;
   text-align: center;
   margin-top: 0px;
-}
+  }
+  
+  .bg-primary {
+    padding-bottom: 2em;
+    padding-top: 2em;
+    text-align: center;
+    padding-right: 2em;
+    padding-left: 2em;
+  }
+
+  
