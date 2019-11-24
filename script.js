@@ -1,52 +1,131 @@
-$(document).ready(function() {
 
-    //This text sets onclick for the search button
-    $("#search-button").on("click", function() {
-        //after inputitng text and clicking, the text is set to this var statement
-      var searchValue = $("#search-value").val();
-        console.log(searchValue + $("#search-value").val())
-        //this clears out the text after the click
-        $("#search-value").val("");
-  
-    });
-
-    //creates a click listener on the list 
-    $(".history").on("click", "li", function() {
-        //this is calling a funtion to be ran after it recieves textcontent
-        searchWeather($(this).text());
-        console.log($(this).text() + " button has been selected")
-      });
+$(document).ready(function () {
 
 
-      function makeRow(text) {
-        var li = $("<li>").addClass("list-group-item list-group-item-action shadow-sm font-weight-bold text-uppercase mb-2").text(text);
-        $(".history").append(li);
+
+  getLocation()
+  var searchValue;
+  var latt;
+  var long;
+  function getLocation() {
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      console.log("broken");
+    }
+  }
+
+  function showPosition(position) {
+    latt = position.coords.latitude.toFixed(2);
+    long = position.coords.longitude.toFixed(2);
+    getGeolocation()
+  }
+
+  function getGeolocation() {
+    $.ajax({
+      type: "GET",
+      url: "https:api.openweathermap.org/data/2.5/weather?lat=" + latt + "&lon=" + long + "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c",
+      dataType: "json",
+      success: function (data) {
+        console.log("made it")
+        searchValue = data.name;
+        console.log(data)
+        searchWeather(data.name);
       }
-    //this says its not going to run till it has been given a search value
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  $("#search-button").on("click", function () {
+    //after inputitng text and clicking, the text is set to this var statement
+    var searchValue = $("#search-value").val();
+
+    //this clears out the text after the click
+    $("#search-value").val("");
+
+    searchWeather(searchValue);
+  });
+
+  //creates a click listener on the list 
+  $(".history").on("click", "li", function () {
+    //this is calling a funtion to be ran after it recieves textcontent
+
+    searchWeather($(this).text());
+  });
+
+
+  function makeRow(text) {
+    var li = $("<li>").addClass("list-group-item list-group-item-action shadow-sm font-weight-bold text-uppercase mb-2").text(text);
+    $(".history").append(li);
+  }
+  //this says its not going to run till it has been given a search value
   function searchWeather(searchValue) {
     $.ajax({
       type: "GET",
       url: "http://api.openweathermap.org/data/2.5/weather?q=" + searchValue + "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial",
       dataType: "json",
-      success: function(data) {
-          
+      success: function (data) {
+
         // create history link for this search
         //if my search value is not in history
         if (history.indexOf(searchValue) === -1) {
-        
+
           history.push(searchValue);
           //in localstorage set the array name as history and string history
           window.localStorage.setItem("history", JSON.stringify(history));
-            //this calls the funtion makeRow with the the var which is the city we input
+          //this calls the funtion makeRow with the the var which is the city we input
           makeRow(searchValue);
-        }       
-            //clears card with weather info
-         $("#today").empty();
+        }
+        //clears card with weather info
+        $("#today").empty();
 
 
         // create html (content) for current weather
 
-        var title = $("<h3>").addClass("card-title text-center").text(data.name + "   " + new Date().toLocaleDateString() );
+        var title = $("<h3>").addClass("card-title text-center").text(data.name + "   " + new Date().toLocaleDateString());
         var card = $("<div>").addClass("card");
         var wind = $("<p>").addClass("card-text").text("Wind Speed: " + data.wind.speed + " MPH");
         var humid = $("<p>").addClass("card-text").text("Humidity: " + data.main.humidity + "%");
@@ -66,13 +145,13 @@ $(document).ready(function() {
       }
     });
   }
-  
+
   function getForecast(searchValue) {
     $.ajax({
       type: "GET",
       url: "http://api.openweathermap.org/data/2.5/forecast?q=" + searchValue + "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c&units=imperial",
       dataType: "json",
-      success: function(data) {
+      success: function (data) {
 
         console.log(data.list[2].dt_txt)
         console.log(data.list[1].dt_txt)
@@ -109,10 +188,10 @@ $(document).ready(function() {
       type: "GET",
       url: "http://api.openweathermap.org/data/2.5/uvi?appid=7ba67ac190f85fdba2e2dc6b9d32e93c&lat=" + lat + "&lon=" + lon,
       dataType: "json",
-      success: function(data) {
+      success: function (data) {
         var uv = $("<p>").text("UV Index: ");
         var btn = $("<span>").addClass("btn btn-sm").text(data.value);
-        
+
         // change color depending on uv value
         if (data.value < 3) {
           btn.addClass("btn-success");
@@ -123,7 +202,7 @@ $(document).ready(function() {
         else {
           btn.addClass("btn-danger");
         }
-        
+
         $("#today .card-body").append(uv.append(btn));
       }
     });
@@ -132,15 +211,51 @@ $(document).ready(function() {
   // get current history, if any
   var history = JSON.parse(window.localStorage.getItem("history")) || [];
 
-
-  //this sections pulls the weather from local storage
   if (history.length > 0) {
-    searchWeather(history[history.length-1]); //this is going to pull the last one on the arry. -1 cause it starts at 0
+    searchWeather(history[history.length - 1]);
   }
-//this just calls on the funtion to make the list of history
+
   for (var i = 0; i < history.length; i++) {
     makeRow(history[i]);
   }
 });
 
-// Bonus, use location API to add the user's current location to the initial landing page.
+
+//Bonus, use location API to add the user's current location to the initial landing page.
+
+// getLocation()
+// var searchValue;
+// var latt;
+// var long;
+// function getLocation() {
+
+//   if (navigator.geolocation) {
+//     navigator.geolocation.getCurrentPosition(showPosition);
+//   } else {
+//     console.log("broken");
+//   }
+// }
+
+
+// function showPosition(position) {
+//   latt = position.coords.latitude.toFixed(2);
+//   long = position.coords.longitude.toFixed(2);
+// getGeolocation()
+// }
+
+// function getGeolocation() {
+//   $.ajax({
+//     type: "GET",
+//     url: "https:api.openweathermap.org/data/2.5/weather?lat=" + latt + "&lon=" + long + "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c",
+//     dataType: "json",
+//     success: function(data) {
+//       console.log("made it")
+//       searchValue = data.name;
+//       console.log(data)
+//       console.log(searchValue + " done")
+//       searchWeather()
+
+//     }
+//   });
+// }
+

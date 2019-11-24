@@ -5,3 +5,30 @@ body {
     background-size: cover;
     -o-background-size: cover;
   }
+
+  #today {
+    
+    margin-right: 20px;
+  }
+
+  h4 {
+    background-color: rgb(241, 241, 241);
+    margin-right: 20px;
+    text-align: center;
+    margin-top: 0px;
+  }
+
+#headerTop {
+  margin-right: 20px;
+}
+
+#forecast {
+  
+}
+
+#location {
+  background-color: rgb(241, 241, 241);
+  margin-right: 20px;
+  text-align: center;
+  margin-top: 0px;
+}

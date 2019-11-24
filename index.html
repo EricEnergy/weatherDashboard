@@ -9,21 +9,21 @@
     <link rel="stylesheet" type="text/css" href="./assets/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/9b3dd0e6ff.js" crossorigin="anonymous"></script>
-  </head>
+</head>
 
 <body class="bg-dark">
 
-    <header class="container-fluid shadow  bg-secondary text-white m-1 p-2">
+    <header id="headerTop" class="container-fluid shadow  bg-secondary text-white mb-3 p-2">
         <h1> Weather Dashboard </h1>
     </header>
 
-    <div class="container-fluid m-1 ">
+    <div class="container-fluid ml-3 ">
         <div class="row">
             <div class="col-lg-3 bg-secondary bg-gradient-warning shadow">
                 <h5 class="mt-1">Search for a City:</h5>
                 <div class="form-inline form-group">
                     <input class="form-control" placeholder="Search" type="text" id="search-value" />
-                    
+
                     <button class="btn btn-primary" id="search-button"> <i class="fas fa-fighter-jet"></i></button>
                 </div>
 
@@ -31,8 +31,10 @@
             </div>
 
             <div class="col-lg-9">
-                <div id="today" class="mt-3"></div>
                 <div id="forecast" class="mt-3"></div>
+
+                <div id="today" class="mt-3"></div>
+                <h5 id="location" class="mt-3"></h5>
             </div>
         </div>
     </div>
