@@ -123,7 +123,7 @@ $(document).ready(function () {
           if (data.list[i].dt_txt.indexOf("15:00:00") !== -1) {
             // create html elements for a bootstrap card
             var col = $("<div>").addClass("col-md-2.5");
-            var card = $("<div>").addClass("bg-primary text-white");
+            var card = $("<div>").addClass("bg-primary text-white mb-1");
             var title = $("<h5>").addClass("card-title").text(new Date(data.list[i].dt_txt).toLocaleDateString());
             var img = $("<img>").attr("src", "http://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png");
 
