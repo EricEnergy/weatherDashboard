@@ -24,7 +24,7 @@ $(document).ready(function () {
   function getGeolocation() {
     $.ajax({
       type: "GET",
-      url: "https:api.openweathermap.org/data/2.5/weather?lat=" + latt + "&lon=" + long + "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c",
+      url: "https://api.openweathermap.org/data/2.5/weather?lat=" + latt + "&lon=" + long + "&appid=7ba67ac190f85fdba2e2dc6b9d32e93c",
       dataType: "json",
       success: function (data) {
         console.log("made it")
